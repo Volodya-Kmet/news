@@ -5,17 +5,21 @@ const config = require('./app/config'),
     mongoose = require('mongoose'),
     db = mongoose.connection,
     bodyParser = require('body-parser'),
+    cors = require('cors'),
+
 
     userRoute = require('./app/routes/userRoute'),
     newsRoute = require('./app/routes/newsRoute'),
     path = require('path');
 
-    mongoose.Promise = global.Promise;
-    
-    app.use(bodyParser.urlencoded({extended: true}));
-    app.use(bodyParser.json());
-    app.use(express.static(path.join(__dirname, 'public')));
-    
+mongoose.Promise = global.Promise;
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
+
 // REGISTER ROUTES
 // =======================================================
 app.use('/user', userRoute);
@@ -37,8 +41,8 @@ db.once('open', () => {
     logger.info('===========================================');
 });
 
-let promis = mongoose.connect('mongodb://' + config.database.host + ':' + 
-config.database.port + '/' + config.database.db);
+let promis = mongoose.connect('mongodb://' + config.database.host + ':' +
+    config.database.port + '/' + config.database.db);
 
 logger.info('================Database===================');
 logger.info(' name : ' + mongoose.connection.name);

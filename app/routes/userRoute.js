@@ -9,7 +9,7 @@ router.get('/get', (req, res) => {
         sendResponse(res, err, data);
     })
 });
-router.post('/create', (req, res) => {
+router.post('/register', (req, res) => {
     UserService.create(req, (err, data) => {
         sendResponse(res, err, data);
     })
