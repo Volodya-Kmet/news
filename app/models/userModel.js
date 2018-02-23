@@ -24,7 +24,7 @@ let UserSchema = new Schema({
         type: Date,
         required: true
     },
-    Countries: {
+    Country: {
         type: String,
         required: true
     },
@@ -39,7 +39,7 @@ let UserSchema = new Schema({
 UserSchema.virtual('Password')
     .set(function (Password) {
         let salt = bcrypt.genSaltSync(10);
-        this.HashedPassword = bcrypt.hashSync(Password, salt);;
+        this.HashedPassword = bcrypt.hashSync(Password, salt);
     });
 
 UserSchema.methods.checkPassword = function (Password) {
