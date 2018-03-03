@@ -6,12 +6,12 @@ const config = {
         },
         server: {
             host: '127.0.0.1',
-            port: 8800
+            port: 8080
         },
         API: {
             key: '27c459eea11f4adc852261ed2f4cb121',
             endpoint: 'https://newsapi.org/v2/'
         }
-    }
+    };
 
 module.exports = config;

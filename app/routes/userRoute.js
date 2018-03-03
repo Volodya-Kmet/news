@@ -4,11 +4,12 @@ const express = require('express'),
 
 module.exports = router;
 
-router.get('/get', (req, res) => {
-    UserService.get(req, (err, data) => {
+router.get('/getUser', (req, res) => {
+    UserService.getUser(req, (err, data) => {
         sendResponse(res, err, data);
     })
 });
+
 router.post('/register', (req, res) => {
     UserService.create(req, (err, data) => {
         sendResponse(res, err, data);
@@ -24,7 +25,12 @@ router.put('/logout', (req, res) => {
         sendResponse(res, err, data);
     })
 });
-router.put('/update', (req, res) => {
+router.put('/refreshToken', (req, res) => {
+    UserService.refresh(req, (err, data) => {
+        sendResponse(res, err, data);
+    })
+});
+router.put('/updateUser', (req, res) => {
     UserService.update(req, (err, data) => {
         sendResponse(res, err, data);
     })
@@ -32,8 +38,8 @@ router.put('/update', (req, res) => {
 
 function sendResponse(res, err, responseObject) {
     if (err) {
-      res.send(err);
+      res.status(err.code).send(err.error);
     } else {
-      res.send(responseObject);
+      res.status(responseObject.code).send(responseObject.response);
     }
   }

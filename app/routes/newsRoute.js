@@ -4,18 +4,17 @@ const express = require('express'),
 
 module.exports = router;
 
-router.get('/getTopHeadlines', (req, res) => {
-    console.log(req.body)
-    NewsService.getTopHeadlines(req, (err, data) => {
+router.put('/getNews', (req, res) => {
+    NewsService.getNews(req, (err, data) => {
         sendResponse(res, err, data);
     })
 });
 
 function sendResponse(res, err, responseObject) {
     if (err) {
-        res.send(err);
+        res.status(err.code).send(err.error);
     } else {
-        res.send(responseObject);
+        res.status(responseObject.code).send(responseObject.response);
     }
 }
 

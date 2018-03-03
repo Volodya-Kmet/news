@@ -1,29 +1,10 @@
 const config = require('./app/config'),
-    express = require('express'),
-    app = express(),
     logger = require('./app/utils/logger'),
     mongoose = require('mongoose'),
     db = mongoose.connection,
-    bodyParser = require('body-parser'),
-    cors = require('cors'),
-
-
-    userRoute = require('./app/routes/userRoute'),
-    newsRoute = require('./app/routes/newsRoute'),
-    path = require('path');
+    app = require('./app');
 
 mongoose.Promise = global.Promise;
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// REGISTER ROUTES
-// =======================================================
-app.use('/user', userRoute);
-app.use('/news', newsRoute);
 
 // START THE SERVER
 // =======================================================
@@ -31,7 +12,6 @@ app.listen(config.server.port);
 logger.info('================Server=====================');
 logger.info(' host : ' + config.server.host);
 logger.info(' port : ' + config.server.port);
-
 
 // DATABASE SETUP
 // =======================================================
