@@ -9,34 +9,27 @@ let serverError = {error: 'Internal server error'};
 
 module.exports = {
     getNews(req, callback) {
-        let options = {};
-        let titleNews = req.headers['title'];
+        let title = req.headers['title'];
         let token = req.headers['token'];
-        console.log(token)
+        let options = {};
         User.findOne({'Token': token}, 'Country Categories', (err, user) => {
             if (err) {
-
-                console.log('err')
                 logger.error(err);
                 callback(serverError)
             }
             if (user) {
-
-                console.log(user)
                 options.country = user.Country;
-                options.category = titleNews != 'Top' ? user.Categories : null;
-
+                options.category = title != 'Top' ? user.Categories : null;
                 newsapi.v2.topHeadlines(options)
-                    .then(response => callback(null, {code: 200, response: response}),
+                    .then(
+                        response => {
+                            console.log(response);
+                            callback(null, {code: 200, response: response})
+                        },
                         err => {
                             logger.error(err);
                             callback(serverError)
                         })
-
-            } else {
-
-                console.log('nf')
-                callback({error: 'User was not found', code: 403})
             }
         })
     }
